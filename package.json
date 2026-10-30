@@ -1,0 +1,316 @@
+{
+  "name": "vscode-py-learn",
+  "displayName": "Python Learner",
+  "description": "Learn Python inside VS Code: beginner lessons, hands-on practice problems, hints and instant auto-grading.",
+  "version": "0.2.0",
+  "publisher": "ahmad-py-learn",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ahmad-1276/vscode-py-learn"
+  },
+  "homepage": "https://github.com/Ahmad-1276/vscode-py-learn#readme",
+  "bugs": {
+    "url": "https://github.com/Ahmad-1276/vscode-py-learn/issues"
+  },
+  "keywords": [
+    "python",
+    "learn",
+    "beginner",
+    "tutorial",
+    "practice",
+    "education",
+    "coding"
+  ],
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Education",
+    "Programming Languages"
+  ],
+  "galleryBanner": {
+    "color": "#1e3a5f",
+    "theme": "dark"
+  },
+  "activationEvents": [
+    "onStartupFinished",
+    "onWebviewPanel:pyLearn"
+  ],
+  "main": "./dist/extension.js",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "The interpreter path setting is only read from user settings in untrusted workspaces.",
+      "restrictedConfigurations": [
+        "pyLearn.pythonPath"
+      ]
+    },
+    "virtualWorkspaces": {
+      "supported": false,
+      "description": "Running Python code requires a local interpreter."
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "pyLearn.continue",
+        "title": "Continue Learning",
+        "category": "Python Learner",
+        "icon": "$(debug-continue)"
+      },
+      {
+        "command": "pyLearn.openLesson",
+        "title": "Open Lesson…",
+        "category": "Python Learner",
+        "icon": "$(book)"
+      },
+      {
+        "command": "pyLearn.openProblem",
+        "title": "Open Problem…",
+        "category": "Python Learner",
+        "icon": "$(beaker)"
+      },
+      {
+        "command": "pyLearn.runCode",
+        "title": "Run Code",
+        "category": "Python Learner",
+        "icon": "$(play)"
+      },
+      {
+        "command": "pyLearn.checkSolution",
+        "title": "Check Solution",
+        "category": "Python Learner",
+        "icon": "$(pass)"
+      },
+      {
+        "command": "pyLearn.nextHint",
+        "title": "Show Next Hint",
+        "category": "Python Learner",
+        "icon": "$(lightbulb)"
+      },
+      {
+        "command": "pyLearn.markLessonComplete",
+        "title": "Mark Lesson Complete",
+        "category": "Python Learner",
+        "icon": "$(check)"
+      },
+      {
+        "command": "pyLearn.markLessonIncomplete",
+        "title": "Mark Lesson Incomplete",
+        "category": "Python Learner",
+        "icon": "$(close)"
+      },
+      {
+        "command": "pyLearn.showProgress",
+        "title": "Show Progress",
+        "category": "Python Learner"
+      },
+      {
+        "command": "pyLearn.resetProgress",
+        "title": "Reset Progress…",
+        "category": "Python Learner",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "pyLearn.openSettings",
+        "title": "Open Settings",
+        "category": "Python Learner",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "pyLearn.showLog",
+        "title": "Show Log",
+        "category": "Python Learner",
+        "icon": "$(output)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "pyLearn.markLessonComplete",
+          "when": "false"
+        },
+        {
+          "command": "pyLearn.markLessonIncomplete",
+          "when": "false"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "pyLearn.continue",
+          "when": "view == pyLearn.progress",
+          "group": "navigation@1"
+        },
+        {
+          "command": "pyLearn.resetProgress",
+          "when": "view == pyLearn.progress",
+          "group": "navigation@2"
+        },
+        {
+          "command": "pyLearn.openSettings",
+          "when": "view == pyLearn.progress",
+          "group": "settings"
+        },
+        {
+          "command": "pyLearn.showLog",
+          "when": "view == pyLearn.progress",
+          "group": "settings"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "pyLearn.markLessonComplete",
+          "when": "view == pyLearn.lessons && viewItem == lesson",
+          "group": "inline"
+        },
+        {
+          "command": "pyLearn.markLessonIncomplete",
+          "when": "view == pyLearn.lessons && viewItem == lesson.completed",
+          "group": "inline"
+        }
+      ],
+      "editor/title/run": [
+        {
+          "command": "pyLearn.runCode",
+          "when": "resourceLangId == python",
+          "group": "pyLearn"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "pyLearn",
+          "title": "Python Learner",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "pyLearn": [
+        {
+          "id": "pyLearn.lessons",
+          "name": "Lessons",
+          "icon": "$(book)"
+        },
+        {
+          "id": "pyLearn.problems",
+          "name": "Problems",
+          "icon": "$(beaker)"
+        },
+        {
+          "id": "pyLearn.progress",
+          "name": "Progress",
+          "icon": "$(graph)"
+        }
+      ]
+    },
+    "walkthroughs": [
+      {
+        "id": "pyLearn.gettingStarted",
+        "title": "Get Started with Python Learner",
+        "description": "Learn Python step by step with lessons, practice problems and instant feedback.",
+        "steps": [
+          {
+            "id": "python",
+            "title": "Make sure Python 3 is installed",
+            "description": "Python Learner runs your code with a local Python 3 interpreter. It is detected automatically, or you can set one.\n[Download Python](https://www.python.org/downloads/)\n[Set Interpreter Path](command:workbench.action.openSettings?%22pyLearn.pythonPath%22)",
+            "media": {
+              "markdown": "media/walkthrough/python.md"
+            }
+          },
+          {
+            "id": "lesson",
+            "title": "Read your first lesson",
+            "description": "Short lessons explain one concept at a time with examples.\n[Open First Lesson](command:pyLearn.openLesson?%22l1-variables%22)",
+            "media": {
+              "markdown": "media/walkthrough/lesson.md"
+            },
+            "completionEvents": [
+              "onCommand:pyLearn.openLesson"
+            ]
+          },
+          {
+            "id": "problem",
+            "title": "Solve a practice problem",
+            "description": "Write a function, press **Run** to try it and **Check** to grade it against tests. Stuck? Ask for a hint.\n[Open First Problem](command:pyLearn.openProblem?%22p1-add%22)",
+            "media": {
+              "markdown": "media/walkthrough/problem.md"
+            },
+            "completionEvents": [
+              "onCommand:pyLearn.checkSolution",
+              "onCommand:pyLearn.openProblem"
+            ]
+          },
+          {
+            "id": "progress",
+            "title": "Track your progress",
+            "description": "The Progress view and status bar show how far you've come.\n[Show Progress](command:pyLearn.showProgress)",
+            "media": {
+              "markdown": "media/walkthrough/progress.md"
+            },
+            "completionEvents": [
+              "onView:pyLearn.progress"
+            ]
+          }
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "Python Learner",
+      "properties": {
+        "pyLearn.pythonPath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine-overridable",
+          "markdownDescription": "Path to the Python 3 interpreter used to run your code. Leave empty to auto-detect (`python.defaultInterpreterPath`, then `python3` / `python` / `py -3`)."
+        },
+        "pyLearn.runTimeoutMs": {
+          "type": "number",
+          "default": 5000,
+          "minimum": 500,
+          "maximum": 60000,
+          "description": "Maximum time in milliseconds a run or check may take before it is stopped."
+        },
+        "pyLearn.maxOutputKb": {
+          "type": "number",
+          "default": 64,
+          "minimum": 4,
+          "maximum": 4096,
+          "description": "Maximum program output kept, in KB. Longer output is truncated and the program is stopped."
+        },
+        "pyLearn.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show your progress in the status bar."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package:build",
+    "compile": "npm run check-types && node esbuild.mjs",
+    "package:build": "npm run check-types && npm run lint && node esbuild.mjs --production",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.mjs --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "pretest": "tsc -p tsconfig.test.json",
+    "test": "node --test \"out-test/test/*.test.js\"",
+    "package": "vsce package --no-dependencies",
+    "publish": "vsce publish --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.2.1",
+    "esbuild": "^0.24.2",
+    "eslint": "^9.17.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.4.0",
+    "typescript-eslint": "^8.18.2"
+  }
+}
